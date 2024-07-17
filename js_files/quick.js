@@ -1,7 +1,7 @@
-let bars = document.querySelectorAll('.bar');
-
 async function partition(array, left, right){
-
+    
+    let bars = document.querySelectorAll('.bar');
+    
     let pivot = array[left];
     bars[left].style.backgroundColor = "blue";
     let i = left;
