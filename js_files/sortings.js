@@ -3,30 +3,25 @@ let width = 5;
 let heightmultiplier = 7;
 
 const mediaquery = window.matchMedia('(max-width: 768px)');
-const medaiquery2 = window.matchMedia('(min-width: 769px) and (max-width: 1024px)');
+const mediaquery2 = window.matchMedia('(min-width: 769px) and (max-width: 1024px)');
 
 if(mediaquery.matches){
-
     length = 80;
     width = 3;
     heightmultiplier = 5;
-
 }
-if(medaiquery2.matches){
+if(mediaquery2.matches){
 
     length = 150;
     width = 4;
-    heightmultiplier = 6;
+    heightmultiplier = 7;
 }
 
-
-
 function createBars() {
-
     let numbers = [];
 
-    for(let i = 0; i<length; i++){
-    numbers.push(getrandomnumbers(5,100));
+    for(let i = 0; i < length; i++){
+        numbers.push(getrandomnumbers(5, 100));
     }
 
     const container = document.getElementById('bars-container');
@@ -39,15 +34,15 @@ function createBars() {
         bar.className = 'bar';
         container.appendChild(bar);
     });
-    return numbers;
+
+    return document.querySelectorAll('.bar');
+
 }
 
-function getrandomnumbers(min,max){
+function getrandomnumbers(min, max){
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-
-const array = createBars();
 const bubblebtn = document.querySelector('.bubble');
 const newarraybtn = document.querySelector('.newarray');
 const selectionbtn = document.querySelector('.selection');
@@ -55,148 +50,123 @@ const insertionbtn = document.querySelector('.insertion');
 const mergebtn = document.querySelector('.merge');
 const quickbtn = document.querySelector('.quick');
 
+newarraybtn.addEventListener('click', () => {
 
-//********                 BUBBLE SORT                 ********//
+   bars = createBars();
+   
+});
+
+
 bubblebtn.addEventListener('click', () => {
-    
-    const bars = document.querySelectorAll('.bar');
-    const heights = Array.from(bars).map(bar => parseInt(bar.style.height) / 7);
 
-    bubblebtn.disabled = true;
-    newarraybtn.disabled = true;
-    selectionbtn.disabled = true;
-    insertionbtn.disabled = true;
-    mergebtn.disabled = true;
-    quickbtn.disabled = true;
+    const heights = Array.from(bars).map(bar => parseInt(bar.style.height) / heightmultiplier);
 
-    bubble(heights)
-    .then(() => {
-        bubblebtn.disabled = false;
-        newarraybtn.disabled = false;
-        selectionbtn.disabled = false;
-        insertionbtn.disabled = false;
-        mergebtn.disabled = false;
-        quickbtn.disabled = false;
+    disableButtons();
+
+    bubble(heights).then(() => {
+
+        enableButtons();
+        console.log(heights);
+
     });
 });
 
-//********                 SELECTION SORT                 ********//
 selectionbtn.addEventListener('click', () => {
-     
-    const bars = document.querySelectorAll('.bar');
-    const heights = Array.from(bars).map(bar => parseInt(bar.style.height) / 7);
 
-    bubblebtn.disabled = true;
-    newarraybtn.disabled = true;
-    selectionbtn.disabled = true;
-    insertionbtn.disabled = true;
-    mergebtn.disabled = true;
-    quickbtn.disabled = true;
-    
-    selection(heights)
-    .then(() => {
+    const heights = Array.from(bars).map(bar => parseInt(bar.style.height) / heightmultiplier);
 
+    disableButtons();
 
-        bubblebtn.disabled = false;
-        newarraybtn.disabled = false;
-        selectionbtn.disabled = false;
-        insertionbtn.disabled = false;
-        mergebtn.disabled = false;
-        quickbtn.disabled = false;
+    selection(heights).then(() => {
+
+        enableButtons();
+        console.log(heights);
+
     });
 });
 
-//********                 INSERTION SORT                 ********//
 insertionbtn.addEventListener('click', () => {
-     
-    const bars = document.querySelectorAll('.bar');
-    const heights = Array.from(bars).map(bar => parseInt(bar.style.height) / 7);
 
-    bubblebtn.disabled = true;
-    newarraybtn.disabled = true;
-    selectionbtn.disabled = true;
-    insertionbtn.disabled = true;
-    mergebtn.disabled = true;
-    quickbtn.disabled = true;
-    
-    insertion(heights)
-    .then(() => {
-        
+    const heights = Array.from(bars).map(bar => parseInt(bar.style.height) / heightmultiplier);
+
+    disableButtons();
+
+    insertion(heights).then(() => {
+
         checkSorted(heights);
+        enableButtons();
+        console.log(heights);
 
-        bubblebtn.disabled = false;
-        newarraybtn.disabled = false;
-        selectionbtn.disabled = false;
-        insertionbtn.disabled = false;
-        mergebtn.disabled = false;
-        quickbtn.disabled = false;
     });
 });
-    
-//********                 MERGE SORT                 ********//
 
 mergebtn.addEventListener('click', () => {
-    
-    const bars = document.querySelectorAll('.bar');
-    const heights = Array.from(bars).map(bar => parseInt(bar.style.height) / 7);
 
-    bubblebtn.disabled = true;
-    newarraybtn.disabled = true;
-    selectionbtn.disabled = true;
-    insertionbtn.disabled = true;
-    mergebtn.disabled = true;
-    quickbtn.disabled = true;
+    const heights = Array.from(bars).map(bar => parseInt(bar.style.height) / heightmultiplier);
 
-    mergesort(heights, 0, heights.length - 1)
-    .then(() => {
-        
+    disableButtons();
+
+    mergesort(heights, 0, heights.length - 1).then(() => {
+
         checkSorted(heights);
+        enableButtons();
+        console.log(heights);
 
-        bubblebtn.disabled = false;
-        newarraybtn.disabled = false;
-        selectionbtn.disabled = false;
-        insertionbtn.disabled = false;
-        mergebtn.disabled = false;
-        quickbtn.disabled = false;
     });
 });
 
-//********                 QUICK SORT                 ********//
+quickbtn.addEventListener('click', () => {
 
-quickbtn.addEventListener('click',() => {
+    const heights = Array.from(bars).map(bar => parseInt(bar.style.height) / heightmultiplier);
 
-    const bars = document.querySelectorAll('.bar');
-    const heights = Array.from(bars).map(bar => parseInt(bar.style.height) / 7);
+    disableButtons();
 
-    bubblebtn.disabled = true;
-    newarraybtn.disabled = true;
-    selectionbtn.disabled = true;
-    insertionbtn.disabled = true;
-    mergebtn.disabled = true;
-    quickbtn.disabled = true;
+    quicksort(heights, 0, heights.length - 1).then(() => {
 
-    quicksort(heights, 0, heights.length - 1)
-    .then(async () => {
-        
         checkSorted(heights);
+        enableButtons();
+        console.log(heights);
 
-        bubblebtn.disabled = false;
-        newarraybtn.disabled = false;
-        selectionbtn.disabled = false;
-        insertionbtn.disabled = false;
-        mergebtn.disabled = false;
-        quickbtn.disabled = false;
     });
 });
 
-async function checkSorted(array){
-    for(let i = 0; i < array.length - 1; i++){
-        if(array[i] <= array[i + 1]){
-            await new Promise(resolve => setTimeout(resolve, 20));
+
+async function checkSorted(array) {
+
+    for (let i = 0; i < array.length - 1; i++) {
+
+        if (array[i] <= array[i + 1]) {
+
+            await new Promise(resolve => setTimeout(resolve, 10));
             bars[i].style.backgroundColor = "green";
+
         }
     }
+
     bars[array.length - 1].style.backgroundColor = "green";
+
+    console.log("Sorted");
+
 }
 
+function disableButtons() {
 
+    bubblebtn.disabled = true;
+    newarraybtn.disabled = true;
+    selectionbtn.disabled = true;
+    insertionbtn.disabled = true;
+    mergebtn.disabled = true;
+    quickbtn.disabled = true;
+
+}
+
+function enableButtons() {
+
+    bubblebtn.disabled = false;
+    newarraybtn.disabled = false;
+    selectionbtn.disabled = false;
+    insertionbtn.disabled = false;
+    mergebtn.disabled = false;
+    quickbtn.disabled = false;
+
+}

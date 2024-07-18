@@ -21,8 +21,6 @@ async function merge(array, left, mid, right) {
 
     }
 
-    await new Promise(resolve => setTimeout(resolve, 30));
-
     let i = 0, j = 0, k = left;
 
     while (i < n1 && j < n2) {
@@ -30,15 +28,14 @@ async function merge(array, left, mid, right) {
         if (leftArray[i] <= rightArray[j]) {
 
             array[k] = leftArray[i];
-            updateBar(bars[k], leftArray[i]);
-            await new Promise(resolve => setTimeout(resolve, 30));
+            await updateBar(bars[k], leftArray[i]);
             i++;
 
         } else {
 
             array[k] = rightArray[j];
-            updateBar(bars[k], rightArray[j]);
-            await new Promise(resolve => setTimeout(resolve, 30));
+            await updateBar(bars[k], rightArray[j]);
+            
             j++;
 
         }
@@ -49,8 +46,7 @@ async function merge(array, left, mid, right) {
     while (i < n1) {
 
         array[k] = leftArray[i];
-        updateBar(bars[k], leftArray[i]);
-        await new Promise(resolve => setTimeout(resolve, 30));
+        await updateBar(bars[k], leftArray[i]);
         i++;
         k++;
 
@@ -59,8 +55,7 @@ async function merge(array, left, mid, right) {
     while (j < n2) {
 
         array[k] = rightArray[j];
-        updateBar(bars[k], rightArray[j]);
-        await new Promise(resolve => setTimeout(resolve, 30));
+        await updateBar(bars[k], rightArray[j]);
         j++;
         k++;
 
@@ -82,8 +77,9 @@ async function mergesort(array, left, right) {
 }
 
 
-function updateBar(el, value) {
-    el.style.height = `${value * 7}px`;
+async function updateBar(el, value) {
+    el.style.height = `${value * heightmultiplier}px`;
+    await new Promise(resolve => setTimeout(resolve, 30));
 }
 
 function mhighlightbars(index) {

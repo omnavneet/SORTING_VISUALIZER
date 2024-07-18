@@ -5,6 +5,7 @@ async function selection(array) {
     for (let i = 0; i < n - 1; i++) {
         
         let mini = i;
+        let swapped = false;
 
         for (let j = i + 1; j < n; j++) {
         
@@ -30,16 +31,29 @@ async function selection(array) {
             array[mini] = temp;
             sswapbars(bars[i], bars[mini]);
 
+            swapped = true;
+
         }
+        
 
         sresetbars(mini);
         sresetbars(i);
         bars[i].style.backgroundColor = "green";
 
+        if(swapped == false){
+
+            for(let k = 0; k < n; k++){
+                bars[k].style.backgroundColor = "green";
+            }
+
+            return;
+
+        }
+
     }
 
     bars[n-1].style.backgroundColor = "green";
-    console.log(array);
+    
 }
 
 function sswapbars(el1, el2) {
